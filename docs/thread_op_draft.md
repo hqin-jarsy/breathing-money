@@ -57,7 +57,8 @@ These are the three I'm least confident about — but I hold every other point i
 ---
 
 **Documents:**
-- Whitepaper (v0.9): https://github.com/hqin-jarsy/breathing-money/blob/v0.9-release/docs/breathing_money_v09.md
+- Whitepaper (v0.9, EN): https://github.com/hqin-jarsy/breathing-money/blob/v0.9-release/docs/breathing_money_v09.md
+- Whitepaper (v0.9, CN): https://github.com/hqin-jarsy/breathing-money/blob/v0.9-release/docs/breathing_money_v09_chinese.md
 - Consensus math appendix: https://github.com/hqin-jarsy/breathing-money/blob/v0.9-release/docs/consensus_math_appendix.md
 - GitHub prototype: https://github.com/hqin-jarsy/breathing-money
 - Errata log: https://github.com/hqin-jarsy/breathing-money/blob/v0.9-release/docs/errata.md
