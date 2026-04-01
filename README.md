@@ -105,7 +105,7 @@ Full whitepaper: [breathing_money_v09.md](docs/breathing_money_v09.md)
 src/
 ├── lib.rs           Module declarations
 ├── main.rs          CLI REPL
-├── crypto/mod.rs    SHA-256, secp256k1, addresses
+├── crypto/mod.rs    SHA-256, ML-DSA/Dilithium, addresses
 ├── types/mod.rs     Block, Transaction, UTXO, constants
 ├── monetary/mod.rs  Supply function + extraction function + floors
 ├── consensus/mod.rs PoW validation, ASERT DAA, month boundaries
