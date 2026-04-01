@@ -104,7 +104,9 @@ annual_growth_rate = max(tail_floor, (MA_current / MA_200months_ago)^(12/200) - 
 new_supply = total_supply × annual_growth_rate / 12
 ```
 
-- MA = 200-month moving average of monthly non-coinbase transaction output values
+- MA(m) = arithmetic mean of monthly non-coinbase transaction output values over the 200-month window ending at month m (months m−199 through m, inclusive)
+- MA_current = MA(m) for the current month m
+- MA_200months_ago = MA(m−200): the same calculation over the non-overlapping prior window ending 200 months earlier (months m−399 through m−200)
 - tail_floor = minimum annual growth rate (candidate: 0.5%/yr), ensuring perpetual issuance
 
 **Signal:** Tracks L1 settlement demand, not "human economic activity" directly. Imperfect proxy, used because it is the only legitimate one under trustless constraints.
@@ -157,6 +159,8 @@ block_reward = base_reward × max(spring_floor, spring(actual_pool / planned_poo
 
 A deliberate constitutional bias toward MoE, informed by 200 years of US economic data (real GDP 3.2-3.5%, real stock appreciation ~4%). Not an empirical law — a design choice. The spring allows the system to deviate freely; 4% is where the spring is most relaxed, not where it's forced to stay.
 
+The structural justification runs deeper than empirical calibration. In the SAE framework's four-layer cognitive architecture (Qin, "Four Layers of Economic Rationality," DOI: 10.5281/zenodo.19358011), standard economic rationality is 12DD — interest-maximization calculation. Bitcoin's deflationary design makes hoarding the 12DD-rational choice; spending is irrational at every layer. A mild-inflationary anchor reverses this: spending becomes 12DD-rational (holding loses purchasing power), while the system's monetary constitution (floor guarantees, immutable supply function) operates at 14DD — non-negotiable commitments that are not subject to market renegotiation. Evaluating this design does not require the SAE framework; the mechanism stands on its own terms. But those interested in the deeper argument for why the anchor is where it is can find it there.
+
 ### Floor Compatibility Constraint
 
 tail_floor and spring_floor must satisfy:
@@ -171,10 +175,10 @@ With candidates (tail_floor = 0.5%/yr, base_reward = 16, ~4,380 blocks/month):
 
 ```
 8,750 ≥ 70,080 × spring_floor
-→ spring_floor ≤ 0.125 (minimum reward ≈ 2 coins/block)
+→ spring_floor ≤ 0.124 (minimum reward ≈ 1.98 coins/block)
 ```
 
-Hard mathematical constraint. Guarantees floor-regime extraction never exceeds floor-regime injection. Gets easier over time as total_supply grows.
+Necessary but not sufficient. At spring_floor = 0.125, floor extraction (70,080 × 0.125 = 8,760) exceeds floor injection (8,750) — the constraint fails at that value. 0.124 satisfies it in expectation. Discrete block timing and month boundaries can still produce transient shortfalls; prototype testing confirmed this edge case exists. Gets easier to satisfy over time as total_supply grows.
 
 **Help wanted:** Validate this calculation. Find scenarios where floors fail despite satisfying the constraint (month boundaries, rounding, discrete timing).
 
@@ -194,7 +198,7 @@ Tx volume as supply signal means block space cost = signal security cost. **Bloc
 
 **Individual:** Near-zero marginal cost wash trades. But resulting supply increase distributed to all miners proportionally; manipulator's gain negligible after 200-month dilution.
 
-**Collective (prisoner's dilemma):** If all miners inflate volume: supply grows, all holdings diluted, confidence drops, price falls, difficulty rises. Nash equilibrium: don't inflate.
+**Collective (prisoner's dilemma tendency):** If all miners inflate volume: supply grows, all holdings diluted, confidence drops, price falls, difficulty rises. This creates pressure against coordinated manipulation — but this is an informal incentive argument, not a proved Nash equilibrium. Individual miners cannot observe each other's manipulation in real time; coordination is hard to sustain without a communication channel; and defecting from a cartel requires trusting that others will also defect. The incentive structure tends toward non-manipulation at scale. Whether it is sufficient to deter a well-capitalized cartel is an open question this review is asking.
 
 **Not claiming impossibility.** Claiming the incentive structure makes sustained manipulation uneconomical at scale.
 
@@ -242,7 +246,7 @@ Not an algorithmic stablecoin (no peg, no rebase, no oracle). Not vulnerable to 
 
 1. **A better supply signal** — on-chain, no oracle, no human input, manipulation cost ≥ tx volume.
 2. **Spring function form and k** — constant or adaptive?
-3. **Floor values** — 0.5%/yr tail, ≤0.125 spring floor. Right?
+3. **Floor values** — 0.5%/yr tail, ≤0.124 spring floor. Right?
 4. **Block space parameters** — weight, fee, dust. Signal security vs usability.
 5. **DAA choice** — 2016-block retarget is a placeholder. Better options under shared-hash?
 6. **Closed-loop stability modeling** — reward ↔ hashrate ↔ block timing ↔ extraction. If you have control systems experience, I'd like to work with you.
