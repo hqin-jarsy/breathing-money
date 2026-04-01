@@ -1,0 +1,20 @@
+[package]
+name = "breathing_money"
+version = "0.1.0"
+edition = "2021"
+description = "Breathing Money — PoW L1 with adaptive monetary base, post-quantum signatures"
+license = "MIT"
+
+[dependencies]
+sha2 = "0.10"
+pqc_dilithium = "0.2.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rand = "0.8"
+hex = "0.4"
+thiserror = "1"
+bincode = "1"
+chrono = "0.4"
+
+[profile.release]
+opt-level = 3
